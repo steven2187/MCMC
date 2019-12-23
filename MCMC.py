@@ -116,9 +116,9 @@ def MCMC_decrypt(n_iter, cipher_text, scoring_params):
             print("iter", i, ":", apply_cipher_on_text(cipher_text, current_cipher)[0:99])
     return state_keeper, best_state
 
-alphabet = string.ascii_uppercase
 # Main algorithm
 # Reference Text: War and Peace
+alphabet = string.ascii_uppercase
 scoring_params = create_scoring_params_dict('war_and_peace.txt')
 # Test Text
 plain_text = "As Oliver gave this first proof of the free and proper action of his lungs, \
