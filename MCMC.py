@@ -1,3 +1,7 @@
+import string
+import math
+import random
+
 # Create dictionary
 def create_cipher_dict(cipher):
     cipher_dict = {}
@@ -22,12 +26,12 @@ def apply_cipher_on_text(text, cipher):
 def create_scoring_params_dict(longtext_path):
     scoring_params = {}
     alphabet_list = list(alphabet)
-    with open(longtext_path) as fp:
+    with open(longtext_path, 'rb') as fp:
         for line in fp:
-            data = list(line.strip())
+            data = list(line.strip().upper())
             for i in range(len(data) - 1):
-                alpha_i = data[i].upper()
-                alpha_j = data[i + 1].upper()
+                alpha_i = data[i]
+                alpha_j = data[i + 1]
                 if alpha_i not in alphabet_list and alpha_i != " ":
                     alpha_i = " "
                 if alpha_j not in alphabet_list and alpha_j != " ":
@@ -112,13 +116,18 @@ def MCMC_decrypt(n_iter, cipher_text, scoring_params):
             print("iter", i, ":", apply_cipher_on_text(cipher_text, current_cipher)[0:99])
     return state_keeper, best_state
 
+alphabet = string.ascii_uppercase
 # Main algorithm
 # Reference Text: War and Peace
 scoring_params = create_scoring_params_dict('war_and_peace.txt')
 # Test Text
-plain_text = "The surgeon had been sitting with his face turned towards the fire: \
-giving the palms of his hands a warm and a rub alternately. As the young woman spoke, he rose, \
-and advancing to the bed's head, said, with more kindness than might have been expected of him:"
+plain_text = "As Oliver gave this first proof of the free and proper action of his lungs, \
+the patchwork coverlet which was carelessly flung over the iron bedstead, rustled; \
+the pale face of a young woman was raised feebly from the pillow; and a faint voice imperfectly \
+articulated the words, Let me see the child, and die. \
+The surgeon had been sitting with his face turned towards the fire: giving the palms of his hands a warm \
+and a rub alternately. As the young woman spoke, he rose, and advancing to the bed's head, said, with more kindness \
+than might have been expected of him: "
 
 encryption_key = "XEBPROHYAUFTIDSJLKZMWVNGQC"
 cipher_text = apply_cipher_on_text(plain_text,encryption_key)
